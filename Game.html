@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Color Match Game</title>
+  <style>
+    body {
+      font-family: Comic Sans MS, sans-serif;
+      text-align: center;
+      background: #f0f8ff;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1 {
+      color: #444;
+    }
+
+    .color-button {
+      width: 100px;
+      height: 100px;
+      margin: 10px;
+      display: inline-block;
+      cursor: pointer;
+      border-radius: 12px;
+      border: 3px solid white;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    #target {
+      font-size: 24px;
+      margin-top: 20px;
+    }
+
+    #controls {
+      margin-top: 30px;
+    }
+
+    .btn {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin: 10px;
+    }
+
+    .btn:hover {
+      background-color: #45a049;
+    }
+
+    input[type="text"] {
+      width: 300px;
+      padding: 8px;
+      font-size: 14px;
+      margin-top: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Color Match Game</h1>
+  <div id="target">Match this color: <strong id="colorName"></strong></div>
+
+  <div id="buttons"></div>
+
+  <div id="controls">
+    <button class="btn" onclick="restartGame()">🔁 Play Again</button>
+  </div>
+
+  <div id="share">
+    <h3>🔗 Share This Game</h3>
+    <input type="text" id="gameLink" value="https://yourname.github.io/color-match-game/" readonly>
+    <br>
+    <button class="btn" onclick="copyLink()">Copy Link</button>
+  </div>
+
+  <script>
+    const colors = ['Red', 'Blue', 'Green', 'Yellow', 'Purple', 'Orange'];
+    let targetColor;
+
+    function setupGame() {
+      targetColor = colors[Math.floor(Math.random() * colors.length)];
+      document.getElementById("colorName").textContent = targetColor;
+
+      const buttonsDiv = document.getElementById("buttons");
+      buttonsDiv.innerHTML = ''; // Clear old buttons
+
+      colors.forEach(color => {
+        const btn = document.createElement("div");
+        btn.className = "color-button";
+        btn.style.backgroundColor = color.toLowerCase();
+        btn.onclick = () => {
+          if (color === targetColor) {
+            alert("🎉 You got it right!");
+          } else {
+            alert("Oops! Try again.");
+          }
+        };
+        buttonsDiv.appendChild(btn);
+      });
+    }
+
+    function restartGame() {
+      setupGame();
+    }
+
+    function copyLink() {
+      const copyText = document.getElementById("gameLink");
+      copyText.select();
+      copyText.setSelectionRange(0, 99999); // For mobile devices
+      document.execCommand("copy");
+      alert("Link copied! 📋 You can now share it.");
+    }
+
+    // Start the game
+    setupGame();
+  </script>
+
+</body>
+</html>
+
